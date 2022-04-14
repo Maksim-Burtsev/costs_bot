@@ -1,5 +1,3 @@
-#TODO тесты
-
 import csv
 import time
 from datetime import date, datetime
@@ -117,7 +115,6 @@ def get_all_statics() -> str:
     total_spent = get_total_spent()
 
     res = _make_formatted_str(buying_dict, total_spent)
-    print(res)
     return res
 
 
@@ -135,6 +132,7 @@ def get_week_statics(week_num: str) -> str:
 
     return res
 
+
 def refresh_csv_file():
     """
     Очищает csv-файл
@@ -144,7 +142,6 @@ def refresh_csv_file():
 
 
 def main():
-
     refresh_csv_file()
 
 
