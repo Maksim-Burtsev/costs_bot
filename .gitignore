@@ -5,7 +5,7 @@ __pycache__/
 
 # C extensions
 *.so
-
+costs.csv
 # Distribution / packaging
 .Python
 build/
