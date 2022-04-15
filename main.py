@@ -1,3 +1,5 @@
+#TODO добавить базу данных
+
 import os
 from datetime import date
 
@@ -14,10 +16,8 @@ from costs import (
 
 
 load_dotenv()
-# TOKEN = os.getenv('TOKEN')
-# MY_ID = int(os.getenv('MY_ID'))
-TOKEN = '5344421271:AAHNQluMJLVp4t7TNzQ3uVrBtmVJQPIonIQ'
-MY_ID = 458294985
+TOKEN = os.getenv('TOKEN')
+MY_ID = int(os.getenv('MY_ID'))
 bot = telebot.TeleBot(TOKEN)
 
 
