@@ -13,9 +13,9 @@ def _get_id() -> int:
         reader = csv.reader(f)
         id = int(list(reader)[-1][0]) + 1
 
-    return id
+    return id   
 
-
+    
 def _get_buying_dict(reader: list) -> defaultdict:
     """
     Формирует словарь на основе всех покупок
