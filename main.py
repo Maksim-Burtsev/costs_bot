@@ -41,7 +41,7 @@ def refresh(message):
         bot.send_message(message.chat.id, 'Refreshed')
 
 @bot.message_handler(commands=['get_file'])
-def refresh(message):
+def get_file(message):
     if message.chat.id == MY_ID:
         file = open('costs_test.csv')
         bot.send_document(message.chat.id, file)
