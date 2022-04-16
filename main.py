@@ -1,9 +1,11 @@
-import os
+from cmath import log
 from datetime import date
+import logging
+
+from loguru import logger
 
 import telebot
 from telebot import types
-from dotenv import load_dotenv
 
 from services import (
     get_week_statics,
@@ -12,6 +14,9 @@ from services import (
     refresh_csv_file
 )
 
+
+logger.add('logs/degug.log', format='{time} {level} {message}',
+           level='DEBUG', rotation='100 MB', compression='zip')
 
 TOKEN = '5344421271:AAHNQluMJLVp4t7TNzQ3uVrBtmVJQPIonIQ'
 MY_ID = 458294985
@@ -30,6 +35,7 @@ def start(message):
         markup.add(item1)
         markup.add(item2)
         bot.send_message(message.chat.id, 'Поехали!', reply_markup=markup)
+        logger.info('Команда /start успешно обработана')
 
 
 @bot.message_handler(commands=['refresh'])
@@ -39,12 +45,24 @@ def refresh(message):
         bot.send_document(message.chat.id, file)
         refresh_csv_file()
         bot.send_message(message.chat.id, 'Refreshed')
+        logger.info('CSV-файл успешно обновлён')
+
 
 @bot.message_handler(commands=['get_file'])
 def get_file(message):
     if message.chat.id == MY_ID:
         file = open('costs.csv')
         bot.send_document(message.chat.id, file)
+        logger.info('Файл успешно отправлен')
+
+
+@bot.message_handler(commands=['get_log'])
+def get_log(message):
+    if message.chat.id == MY_ID:
+        file = open('logs/debug.log')
+        bot.send_document(message.chat.id, file)
+        logger.info('Файл с логами успешно отправлен')
+
 
 @bot.message_handler(content_types='text')
 def main(message):
@@ -53,10 +71,12 @@ def main(message):
             week_num = date.today().isocalendar().week
             response_text = get_week_statics(week_num)
             bot.send_message(message.chat.id, response_text)
+            logger.info('Отправлен отчёт за неделю')
 
         elif message.text == "Отчёт за всё время":
             response_text = get_all_statics()
             bot.send_message(message.chat.id, response_text)
+            logger.info('Отправлен отчёт за всё время')
         else:
             text = message.text
             text = text.split()
@@ -65,6 +85,7 @@ def main(message):
                 price = int(text[1])
                 add_buy(name, price)
                 bot.send_message(message.chat.id, 'Accepted')
+                logging.info(f'Добавлена покупка: {name} {price} руб.')
 
 
 bot.infinity_polling()
