@@ -1,5 +1,3 @@
-#TODO добавить базу данных
-
 import os
 from datetime import date
 
@@ -7,7 +5,7 @@ import telebot
 from telebot import types
 from dotenv import load_dotenv
 
-from costs import (
+from services import (
     get_week_statics,
     get_all_statics,
     add_buy,
@@ -35,7 +33,7 @@ def start(message):
 @bot.message_handler(commands=['refresh'])
 def refresh(message):
     if message.chat.id == MY_ID:
-        file = open('costs_test.csv')
+        file = open('costs.csv')
         bot.send_document(message.chat.id, file)
         refresh_csv_file()
         bot.send_message(message.chat.id, 'Refreshed')
@@ -43,7 +41,7 @@ def refresh(message):
 @bot.message_handler(commands=['get_file'])
 def get_file(message):
     if message.chat.id == MY_ID:
-        file = open('costs_test.csv')
+        file = open('costs.csv')
         bot.send_document(message.chat.id, file)
 
 @bot.message_handler(content_types='text')
