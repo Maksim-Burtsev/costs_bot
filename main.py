@@ -54,7 +54,7 @@ def get_file(message):
 @bot.message_handler(commands=['get_log'])
 def get_log(message):
     if message.chat.id == MY_ID:
-        file = open('logs/debug.log')
+        file = open('logs/degug.log')
         bot.send_document(message.chat.id, file)
         logger.info('Файл с логами успешно отправлен')
 
