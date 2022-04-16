@@ -1,6 +1,4 @@
-from cmath import log
 from datetime import date
-import logging
 
 from loguru import logger
 
@@ -20,9 +18,6 @@ logger.add('logs/degug.log', format='{time} {level} {message}',
 
 TOKEN = '5344421271:AAHNQluMJLVp4t7TNzQ3uVrBtmVJQPIonIQ'
 MY_ID = 458294985
-# load_dotenv()
-# TOKEN = os.getenv('TOKEN')
-# MY_ID = int(os.getenv('MY_ID'))
 bot = telebot.TeleBot(TOKEN)
 
 
@@ -85,7 +80,9 @@ def main(message):
                 price = int(text[1])
                 add_buy(name, price)
                 bot.send_message(message.chat.id, 'Accepted')
-                logging.info(f'Добавлена покупка: {name} {price} руб.')
+                logger.info(f'Добавлена покупка: {name} {price} руб.')
+            else:
+                logger.info(f'Необрабатываемое сообщение: {message.text}')
 
 
 bot.infinity_polling()
