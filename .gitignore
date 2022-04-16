@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files
-costs.csv
+# costs.csv
 __pycache__/
 *.py[cod]
 *$py.class
