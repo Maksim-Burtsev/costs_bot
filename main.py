@@ -16,8 +16,8 @@ from services import (
 logger.add('logs/degug.log', format='{time} {level} {message}',
            level='DEBUG', rotation='100 MB', compression='zip')
 
-TOKEN = '5344421271:AAHNQluMJLVp4t7TNzQ3uVrBtmVJQPIonIQ'
-MY_ID = 458294985
+TOKEN = ''
+MY_ID = int()
 bot = telebot.TeleBot(TOKEN)
 
 
