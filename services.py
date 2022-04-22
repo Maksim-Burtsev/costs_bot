@@ -3,7 +3,6 @@ import time
 from datetime import date, datetime
 from collections import defaultdict
 
-
     
 def _get_buying_dict(reader: list) -> defaultdict:
     """

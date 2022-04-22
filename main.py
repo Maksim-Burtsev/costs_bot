@@ -14,7 +14,7 @@ from services import (
 
 
 logger.add('logs/degug.log', format='{time} {level} {message}',
-           level='DEBUG', rotation='100 MB', compression='zip')
+           level='DEBUG', rotation='5 MB', compression='zip')
 
 TOKEN = '5344421271:AAHNQluMJLVp4t7TNzQ3uVrBtmVJQPIonIQ'
 MY_ID = 458294985
@@ -78,6 +78,12 @@ def main(message):
             if len(text) == 2 and text[0].isalpha() and text[1].isdigit():
                 name = text[0]
                 price = int(text[1])
+                add_buy(name, price)
+                bot.send_message(message.chat.id, 'Accepted')
+                logger.info(f'Добавлена покупка: {name} {price} руб.')
+            elif len(text) == 2 and text[1].isalpha() and text[0].isdigit():
+                name = text[1]
+                price = int(text[0])
                 add_buy(name, price)
                 bot.send_message(message.chat.id, 'Accepted')
                 logger.info(f'Добавлена покупка: {name} {price} руб.')
