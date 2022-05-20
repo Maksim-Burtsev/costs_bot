@@ -4,6 +4,7 @@ import os
 import requests
 from tabulate import tabulate
 from dotenv import load_dotenv
+import matplotlib.pyplot as plt
 
 
 class Service:
@@ -70,3 +71,55 @@ class Service:
         if response.status_code == 201:
             return True
         return False
+
+    def _get_labels_and_values(self) -> tuple[list, list]:
+        """
+        Формирует два списка: названий покупок и их стоимости на основе данных от API
+        """
+        labels, values = [], []
+        data, _ = self._get_data_from_api()
+
+        for buy in data:
+            labels.append(buy['name'])
+            values.append(buy['cost'])
+
+        return (labels, values)
+
+    def create_expensive_costs_pie(self) -> None:
+        """
+        Создаёт диаграмму на основе 10 самых дорогих покупок
+        """
+        labels, values = self._get_labels_and_values()
+        self._create_pie(labels[:10], values[:10], 'expensive')
+
+    def create_cheap_costs_pie(self) -> None:
+        """
+        Создаёт диаграмму на основе 10 самых дешёвых покупок
+        """
+        labels, values = self._get_labels_and_values()
+        self._create_pie(labels[-10:], values[-10:], 'cheap')
+
+    def create_all_costs_pie(self) -> None:
+        """
+        Создаёт диаграмму на основе всех покупок
+        """
+        labels, values = self._get_labels_and_values()
+        self._create_pie(labels, values, 'all')
+
+
+    def _create_pie(self, labels: list, values: list, filename:str) -> None:
+        """
+        Создаёт диаграмму
+        """
+        myexplode = [0.2, 0.2, 0.1, 0.1] + [0]*(len(values)-4)
+        plt.pie(values, labels=labels, startangle=90, explode=myexplode)
+
+        plt.savefig(f'{filename}.jpg')
+
+
+if __name__ == '__main__':
+    service = Service()
+    service.create_all_costs_pie()
+
+    #TODO plt.close()
+
