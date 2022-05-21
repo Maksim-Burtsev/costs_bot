@@ -114,12 +114,12 @@ class Service:
         myexplode = [0.2, 0.2, 0.1, 0.1] + [0]*(len(values)-4)
         plt.pie(values, labels=labels, startangle=90, explode=myexplode)
 
-        plt.savefig(f'{filename}.jpg')
+        plt.savefig(f'pie_images/{filename}.jpg')
+        plt.close()
 
 
 if __name__ == '__main__':
     service = Service()
     service.create_all_costs_pie()
-
-    #TODO plt.close()
-
+    service.create_cheap_costs_pie()
+    service.create_expensive_costs_pie()
